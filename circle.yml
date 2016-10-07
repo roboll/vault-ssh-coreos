@@ -1,0 +1,18 @@
+machine:
+  services:
+    - docker
+
+test:
+  pre:
+    - echo "no tests"
+
+  override:
+    - echo "no tests"
+
+# env var must be setup in circleci console
+deployment:
+  release:
+    tag: /v.*/
+    commands:
+      - docker login -e="." -u="$DOCKER_USER" -p="$DOCKER_PASS" quay.io
+      - make push
