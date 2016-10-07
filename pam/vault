@@ -1,0 +1,1 @@
+auth	sufficient	pam_exec.so quiet expose_authtok log=/var/log/vault-ssh.log /opt/bin/vault-ssh-helper -config /etc/vault/ssh.hcl

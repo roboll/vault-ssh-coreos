@@ -1,0 +1,56 @@
+#cloud-config
+
+coreos:
+  units:
+    - name: rkt-trust.service
+      command: start
+      content: |
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/rkt trust --skip-fingerprint-review --prefix quay.io/roboll
+
+    - name: vault-ssh.service
+      command: start
+      content: |
+        [Service]
+        Type=oneshot
+
+        ExecStartPre=/bin/mkdir -p /tmp/vault-ssh
+        ExecStartPre=/usr/bin/rkt fetch quay.io/roboll/vault-ssh-coreos:v0.1
+        ExecStart=/usr/bin/rkt image extract quay.io/roboll/vault-ssh-coreos:v0.1 /tmp/vault-ssh
+        ExecStartPost=/tmp/vault-ssh/link.sh
+
+    - name: vault.service
+      command: start
+      content: |
+        [Unit]
+        After=rkt-trust.service
+
+        [Service]
+        Environment=VAULT_IMAGE=quay.io/roboll/vault:v0.6.1
+
+        ExecStartPre=/bin/mkdir -p /var/vault
+        ExecStart=/usr/bin/rkt run --net=host \
+          --volume resolv,kind=host,source=/etc/resolv.conf \
+          --mount volume=resolv,target=/etc/resolv.conf \
+          --volume config,kind=host,source=/etc/vault \
+          --mount volume=config,target=/etc/vault \
+          --volume data,kind=host,source=/var/vault \
+          --mount volume=data,target=/var/vault \
+          --volume log,kind=host,source=/dev/log \
+          --mount volume=log,target=/dev/log \
+          ${VAULT_IMAGE} --exec=/opt/bin/vault --caps-retain=CAP_IPC_LOCK \
+          -- server -config /etc/vault/vault.hcl
+
+write_files:
+  - path: /etc/vault/vault.hcl
+    permissions: 0600
+    content: |
+      backend file {
+        path = "/var/vault"
+      }
+
+      listener tcp {
+        address = ":8200"
+        tls_disable = 1
+      }
