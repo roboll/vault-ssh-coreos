@@ -1,6 +1,6 @@
-# vault-ssh-coreos
+# vault-ssh-coreos [![CircleCI](https://circleci.com/gh/roboll/vault-ssh-coreos.svg?style=svg)](https://circleci.com/gh/roboll/vault-ssh-coreos)
 
-[Vault SSH]() PAM configuration for CoreOS.
+[Vault SSH]() PAM configuration for CoreOS. [![Docker Repository on Quay](https://quay.io/repository/roboll/vault-ssh-coreos/status "Docker Repository on Quay")](https://quay.io/repository/roboll/vault-ssh-coreos)
 
 ## About
 
