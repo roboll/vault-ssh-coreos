@@ -1,4 +1,6 @@
 PREFIX  := quay.io/roboll/vault-ssh-coreos
+TAG      := $(shell git describe --tags --abbrev=0 HEAD)
+
 VERSION := 0.1.2
 OS      := linux
 ARCH    := amd64
@@ -21,9 +23,9 @@ download: checksums checksums.sig
 .PHONY: download
 
 container: download
-	docker build -t $(PREFIX):$(VERSION) .
+	docker build -t ${PREFIX}:${TAG} .
 .PHONY: container
 
 push: container
-	docker push $(PREFIX):$(VERSION)
+	docker push ${PREFIX}:${TAG}
 .PHONY: push
