@@ -1,6 +1,8 @@
 # vault-ssh-coreos [![CircleCI](https://circleci.com/gh/roboll/vault-ssh-coreos.svg?style=svg)](https://circleci.com/gh/roboll/vault-ssh-coreos)
 
-[Vault SSH]() PAM configuration for CoreOS. [![Docker Repository on Quay](https://quay.io/repository/roboll/vault-ssh-coreos/status "Docker Repository on Quay")](https://quay.io/repository/roboll/vault-ssh-coreos)
+[![Docker Repository on Quay](https://quay.io/repository/roboll/vault-ssh-coreos/status "Docker Repository on Quay")](https://quay.io/repository/roboll/vault-ssh-coreos)
+
+[Vault SSH](https://vaultproject.io) PAM configuration for CoreOS.
 
 ## About
 
@@ -17,7 +19,7 @@ Check out the [Vagrant config](./test/vagrant/user-data.yaml#L12) used for testi
 Type=oneshot
 
 ExecStartPre=/bin/mkdir -p /tmp/vault-ssh
-ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.1
-ExecStart=/usr/bin/rkt image extract quay.io/roboll/vault-ssh-coreos:v0.1 /tmp/vault-ssh
+ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.1.2
+ExecStart=/usr/bin/rkt image extract quay.io/roboll/vault-ssh-coreos:v0.1.2 /tmp/vault-ssh
 ExecStartPost=/tmp/vault-ssh/link.sh
 ```

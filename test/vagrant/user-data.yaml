@@ -16,8 +16,8 @@ coreos:
         Type=oneshot
 
         ExecStartPre=/bin/mkdir -p /tmp/vault-ssh
-        ExecStartPre=/usr/bin/rkt fetch quay.io/roboll/vault-ssh-coreos:v0.1
-        ExecStart=/usr/bin/rkt image extract quay.io/roboll/vault-ssh-coreos:v0.1 /tmp/vault-ssh
+        ExecStartPre=/usr/bin/rkt fetch quay.io/roboll/vault-ssh-coreos:v0.1.2
+        ExecStart=/usr/bin/rkt image extract quay.io/roboll/vault-ssh-coreos:v0.1.2 /tmp/vault-ssh
         ExecStartPost=/tmp/vault-ssh/link.sh
 
     - name: vault.service
