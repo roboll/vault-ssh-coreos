@@ -18,7 +18,7 @@ Check out the [Vagrant config](./test/vagrant/user-data.yaml#L12) used for testi
 [Service]
 Type=oneshot
 
-ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.1.2
-ExecStart=/usr/bin/rkt image extract --rootfs-only --overwrite quay.io/roboll/vault-ssh-coreos:v0.1.2 /tmp/vault-ssh
+ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.2.0
+ExecStart=/usr/bin/rkt image extract --rootfs-only --overwrite quay.io/roboll/vault-ssh-coreos:v0.2.0 /tmp/vault-ssh
 ExecStartPost=/tmp/vault-ssh/link.sh
 ```
