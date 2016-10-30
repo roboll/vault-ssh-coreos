@@ -1,5 +1,5 @@
 PREFIX  := quay.io/roboll/vault-ssh-coreos
-TAG      := $(shell git describe --tags --abbrev=0 HEAD)
+TAG      := $(shell git describe --tags --always)
 
 VERSION := 0.1.2
 OS      := linux
@@ -14,7 +14,7 @@ checksums:
 checksums.sig:
 	curl ${DL_SITE}/vault-ssh-helper_${VERSION}_SHA256SUMS.sig -o ./checksums.sig
 
-download: checksums checksums.sig
+download: clean checksums checksums.sig
 	curl ${DL_SITE}/${ZIPFILE} -o ./${ZIPFILE}
 	gpg --recv 51852D87348FFC4C
 	gpg --verify checksums.sig checksums
@@ -22,10 +22,13 @@ download: checksums checksums.sig
 	unzip ${ZIPFILE}
 .PHONY: download
 
-container: download
+clean:
+	rm -f checksums checksum checksums.sig ${ZIPFILE} vault-ssh-helper
+
+image: download
 	docker build -t ${PREFIX}:${TAG} .
 .PHONY: container
 
-push: container
+push: image
 	docker push ${PREFIX}:${TAG}
 .PHONY: push

@@ -1,6 +1,6 @@
-FROM scratch
+FROM alpine:3.4
 
 ADD vault-ssh-helper /opt/bin/vault-ssh-helper
-ADD pam /etc/pam.d
+ADD rootfs /
 
-ADD link.sh /link.sh
+ENTRYPOINT ["/install.sh"]

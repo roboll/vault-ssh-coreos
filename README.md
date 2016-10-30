@@ -6,7 +6,7 @@
 
 ## About
 
-PAM configuration for allowing Vault OTP SSH access to CoreOS instances. Rather than override the default sshd on CoreOS, use `rkt image extract` to extract the contents to a directory, and run [`link.sh`](link.sh) to sync the contents to the root file system. Includes a [minimal PAM modification](pam/system-auth#L4), [vault-ssh-helper PAM file](pam/vault), and `vault-ssh-helper` binary.
+PAM configuration for allowing Vault OTP SSH access to CoreOS instances. Rather than override the default sshd on CoreOS, use `rkt` or `docker` to run [`install.sh`](rootfs/install.sh) to sync the contents to the root file system. Includes a [minimal PAM modification](rootfs/etc/pam.d/system-auth#L4), [vault-ssh-helper PAM file](rootfs/etc/pam.d/vault), and `vault-ssh-helper` binary.
 
 The config file `/etc/vault/ssh.hcl` is up to you to provide.
 
@@ -19,6 +19,5 @@ Check out the [Vagrant config](./test/vagrant/user-data.yaml#L12) used for testi
 Type=oneshot
 
 ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.2.0
-ExecStart=/usr/bin/rkt image extract --rootfs-only --overwrite quay.io/roboll/vault-ssh-coreos:v0.2.0 /tmp/vault-ssh
-ExecStartPost=/tmp/vault-ssh/link.sh
+ExecStart=/usr/bin/rkt run --volume --mount quay.io/roboll/vault-ssh-coreos:v0.2.0
 ```
