@@ -1,5 +1,4 @@
-#! /bin/bash
-set -eo pipefail
+#! /bin/sh
 
-dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-rsync -rupoE $dir/ /rootfs/
+rsync -rupoE /opt/bin/vault-ssh-helper /rootfs/opt/bin/vault-ssh-helper
+rsync -rupoE /etc/pam.d/ /rootfs/etc/pam.d/
