@@ -19,5 +19,5 @@ Check out the [Vagrant config](./test/vagrant/user-data.yaml#L12) used for testi
 Type=oneshot
 
 ExecStartPre=/usr/bin/rkt fetch --trust-keys-from-https quay.io/roboll/vault-ssh-coreos:v0.2.0
-ExecStart=/usr/bin/rkt run --volume --mount quay.io/roboll/vault-ssh-coreos:v0.2.0
+ExecStart=/usr/bin/rkt run --volume {} --mount {} quay.io/roboll/vault-ssh-coreos:v0.2.0
 ```
